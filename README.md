@@ -40,18 +40,20 @@ Once Dockerdev is fully installed, your directory structure will look like this:
 modules you use. If you don't have one and aren't sure what to put in it,
 you can create one with all of the modules you currently have installed like this:
 
-
+    ```Shell
     pip freeze > some_project/source/django_site/requirements.txt
+    ```
 
 * Copy the docker_dev directory into your source directory:
 
-
+    ```Shell
     cd some_project/source
     git submodule add git://github.com/docker_dev/docker_dev.git docker_dev
+    ```
 
 * Create a .env file in your source directory and paste this into it, customizing the settings for your project:
 
-
+    ```Shell
     # COMPOSE_PROJECT_NAME is the prefix docker-compose uses to create images and containers. 
     # It should be different for each of your projects.
     COMPOSE_PROJECT_NAME=docker_dev
@@ -61,11 +63,12 @@ you can create one with all of the modules you currently have installed like thi
     DATABASE_TYPE=postgres
     # DJANGO_PROJECT_DIR is the name of the directory containing manage.py.
     DJANGO_PROJECT_DIR=django_site
+    ```
 
 
 * Create a docker-compose.yml file in your source directory and paste this into it:
 
-
+    ```YAML
     version: '2'
     services:
       db:
@@ -78,22 +81,25 @@ you can create one with all of the modules you currently have installed like thi
           service: web
         links:
           - db
+    ```
           
   You can, of course, add other services or options as needed.
 
 * Create an alias (perhaps adding it to a shell configuration file to make it permanent):
 
-
+    ```Shell
     alias dev="make -f docker_dev/Makefile"
+    ```
     
 * Enter this command to build the docker image:
 
-
+    ```Shell
     dev build
+    ```
     
 * Copy this into your settings.py file:
 
-
+    ```python
     DATABASE_TYPES = {
         'postgres': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -121,12 +127,13 @@ you can create one with all of the modules you currently have installed like thi
     DATABASES = {
         'default': DATABASE_TYPES[os.environ['DATABASE_TYPE']]
     }
+    ```
     
-If you're certain what datbase you're going to use, you can remove all the
-logic for choosing the right one using an environment variable.
-Like this, for example:
+* If you're certain what database you're going to use, you can simplify this by 
+removing all of the logic for choosing the right one by means of an environment 
+variable. Like this, for example:
 
-
+    ```python
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -137,12 +144,13 @@ Like this, for example:
             'NAME': 'devdb',
         },
     }
+    ```
     
 * Run this command to start your website:
 
-
+    ```Shell
     dev start
-    
+    ```
     
 That's it!
 
@@ -151,8 +159,9 @@ That's it!
 
 To see what else you can do, just type:
 
-
+    ```Shell
     dev help
+    ```
 
 If you don't know much about docker, look inside docker_dev/Makefile
 to see what docker commands dockerdev uses to do its thing.
