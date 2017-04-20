@@ -1,0 +1,7 @@
+# This file intentionally does not specify version numbers, so that if
+# the projects requirements.txt file does have version numbers, those
+# versions will be used
+Django
+psycopg2      # Needed if you use postgresql
+mysql-python  # Needed if you use mysql
+pyinotify     # Prevent high cpu usage by docker file system due to directory sharing

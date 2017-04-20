@@ -1,0 +1,17 @@
+FROM python:2.7
+ARG DJANGO_PROJECT_DIR
+ENV PYTHONUNBUFFERED 1
+
+# Don't really need to do this unless actually using sqlite,
+# but it doesn't really hurt anything in a dev environment
+RUN apt-get update && apt-get install -y \
+  sqlite3 libsqlite3-dev
+
+RUN mkdir /build
+WORKDIR /build
+
+# Install python requirements
+COPY docker_dev/requirements_web.txt /build/
+COPY ${DJANGO_PROJECT_DIR}/requirements.txt /build/
+RUN pip install -r requirements.txt -r requirements_web.txt
+RUN pip install pyinotify  # prevent high cpu usage by file system due to directory sharing

@@ -1,0 +1,13 @@
+version: '2'
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dev-password
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev-password
+      MYSQL_DATABASE: devdb
+    volumes:
+      - ../../data/mysql:/var/lib/mysql
+  web:
+    # Intentionally left blank

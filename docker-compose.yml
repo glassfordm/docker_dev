@@ -1,0 +1,24 @@
+version: '2'
+services:
+  db:
+    extends:
+      file: docker-compose-${DATABASE_TYPE}.yml
+      service: db
+  web:
+    extends:
+      file: docker-compose-${DATABASE_TYPE}.yml
+      service: web
+    build:
+      context: ..
+      args:
+        - DJANGO_PROJECT_DIR
+      dockerfile: docker_dev/Dockerfile-web
+    image: ${COMPOSE_PROJECT_NAME}_web
+    environment:
+      DATABASE_TYPE: ${DATABASE_TYPE}
+    working_dir: /source
+    command: python ${DJANGO_PROJECT_DIR}/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ..:/source
+    ports:
+      - "${WEBSITE_PORT}:8000"

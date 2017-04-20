@@ -1,0 +1,22 @@
+The makefile provides simple commands for running
+common project-specific docker tasks.
+It can be instructive to look in the Makefile to 
+see what docker commands and options it uses.
+
+make help  # display this help file
+
+make start # start the web site (usually this is the first thing you do)
+make logs  # display and follow the logs for the website as it's running
+make tests # run django unit tests
+make debug # run the website in a way that allows pdb debugging
+make stop  # stop the web site
+
+make shell # open a python shell to the django environment (manage.py shell)
+make sql   # open a sql shell in to the django database
+
+make build # force the docker image to rebuild (e.g. if requirements.txt changes)
+make clean # delete the project-specfic docker containers and images
+
+To explore other commands you might use, type:
+  docker-compose help
+  docker help

@@ -1,0 +1,7 @@
+version: '2'
+services:
+  db:
+    image: hello-world
+  web:
+    volumes:
+      - ../../data/sqllite:/var/lib/sqlite/
